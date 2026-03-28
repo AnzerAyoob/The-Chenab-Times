@@ -12,7 +12,7 @@ FEEDS = [
         "label": "Featured",
     },
     {
-        "url": "https://thechenabtimes.com/news/op-ed/feed",
+        "url": "https://thechenabtimes.com/news/editorial/feed",
         "folder": "op-ed",
         "label": "Op-Ed",
     },
