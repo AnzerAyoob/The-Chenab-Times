@@ -5,6 +5,8 @@ import feedparser
 from slugify import slugify
 from datetime import datetime
 
+feedparser.USER_AGENT = "Mozilla/5.0 (compatible; RSSBot/1.0; +https://github.com/AnzerAyoob/The-Chenab-Times)"
+
 FEEDS = [
     {
         "url": "https://thechenabtimes.com/news/featured/feed",
@@ -19,7 +21,6 @@ FEEDS = [
 ]
 
 MAX_ENTRIES = 50
-
 def clean_html(raw: str) -> str:
     return re.sub(r"<[^>]+>", "", raw or "").strip()
 
