@@ -1,0 +1,36 @@
+name: Sync RSS Feed to Repo
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync-rss:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install feedparser requests python-slugify
+
+      - name: Run RSS sync script
+        run: python scripts/rss_to_markdown.py
+
+      - name: Commit new articles
+        run: |
+          git config user.name "RSS Sync Bot"
+          git config user.email "rss-bot@thechenabtimes.com"
+          git add featured/ op-ed/
+          git diff --cached --quiet || git commit -m "Auto-sync: new articles from RSS [$(date +'%Y-%m-%d %H:%M')]"
+          git push
